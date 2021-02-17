@@ -76,6 +76,23 @@ spec:
                   labels:
                     compliance.openshift.io/check-status: FAIL
                     compliance.openshift.io/suite: e8
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: compliance-suite-e8-remediation
+        spec:
+          remediationAction: inform
+          severity: high
+          object-templates:
+            - complianceType: mustnothave # this template reports the results for scan suite: e8 by looking at ComplianceCheckResult CRs
+              objectDefinition:
+                apiVersion: compliance.openshift.io/v1alpha1
+                kind: ComplianceRemediation
+                metadata:
+                  namespace: openshift-compliance
+                  labels:
+                    compliance.openshift.io/suite: e8
 ---
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
